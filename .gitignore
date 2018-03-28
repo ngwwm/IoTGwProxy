@@ -1,0 +1,6 @@
+node_modules
+geek-iot-poc.pem
+*.log
+*.out
+test*.*
+config.js
