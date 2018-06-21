@@ -4,3 +4,4 @@ geek-iot-poc.pem
 *.out
 test*.*
 config.js
+data
