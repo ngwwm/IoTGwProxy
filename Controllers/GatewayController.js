@@ -171,18 +171,32 @@ router.get('/data/bylastperiod', function (req, res) {
 });
 
 /* try to pull data every ms defined by poll_interval_ms in config.js */
-setInterval(pullCloudDataHeartisansMain, config.vendor_cloud.heartisans.poll_interval_ms);
-//setInterval(pullDummyCloudData, 60000);
+try {
+  /* try to parse the offsets.json file, in case of any error, we can catch it. */
+  var dummy = JSON.parse(fs.readFileSync(__root+'/data/offsets.json', 'utf8'));
+
+  setInterval(pullCloudDataHeartisansMain, config.vendor_cloud.heartisans.poll_interval_ms);
+
+  //setInterval(pullDummyCloudData, 60000);
+} catch (error) {
+  console.error(error);
+  console.log("Error reading data from offsets.json. Pull Cloud Data is disabled.");
+}
+
 
 function pullCloudDataHeartisansMain() {
-  var jobj = JSON.parse(fs.readFileSync(__root+'/data/offsets.json', 'utf8'));
+  try {
+    var jobj = JSON.parse(fs.readFileSync(__root+'/data/offsets.json', 'utf8'));
 
-  var obj = jobj.heartisans;
-  for (var key in obj) {
-    pullCloudDataHeartisans(key, obj[key]);
+    var obj = jobj.heartisans;
+    for (var key in obj) {
+      pullCloudDataHeartisans(key, obj[key]);
+    }
+    //fs.writeFileSync(__root+'/data/offsets.json', JSON.stringify(jobj, null, 2));
+  } 
+  catch(error) {
+    console.error(error);
   }
-
-  //fs.writeFileSync(__root+'/data/offsets.json', JSON.stringify(jobj, null, 2));
 }
 
 function pullCloudDataHeartisans(userId, objUser) {
