@@ -224,9 +224,11 @@ function pullCloudDataHeartisans(userId, objUser) {
             "device_id" : objUser.serial,
             "device_type" : objUser.device_type,
             "jdata" : JSON.stringify({"systolic": meas[key].sys, "diastolic": meas[key].dia, "patientid": objUser.patientid, "pulserate": meas[key].hr}),
-            "data_timestamp" : moment(meas[key].takenAt).utcOffset(8).format('YYYY-MM-DD HH:mm:ss')
+            "data_timestamp" : moment.unix(meas[key].takenAt._seconds).utcOffset(8).format('YYYY-MM-DD HH:mm:ss')
           }
         }
+        //console.log(meas[key].takenAt._seconds);
+        //console.log(moment.unix(meas[key].takenAt._seconds).utcOffset(8).format('YYYY-MM-DD HH:mm:ss'));
         /*console.log(records[cnt]);*/
         new_offset = parseInt(key); 
       } else {
