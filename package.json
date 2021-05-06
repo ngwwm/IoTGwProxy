@@ -16,7 +16,7 @@
     "jQuery": "^1.7.4",
     "jsdom": "^11.9.0",
     "jsonwebtoken": "^8.1.1",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.21",
     "moment": "^2.22.1",
     "node-stringify": "^0.2.1",
     "nodeunit": "^0.11.2"
